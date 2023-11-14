@@ -1,11 +1,78 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
+}
+
+enum BankAccountType {
+  CHECKING
+  INVESTIMENT
+  CASH
+
+  @@map("bank_account_type")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+
+  @@map("transaction_type")
+}
+
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  email    String @unique
+  password String
+
+  bankAccounts BankAccount[]
+  categories   Category[]
+  transactions Transaction[]
+
+  @@map("users")
+}
+
+model BankAccount {
+  id             String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String          @map("user_id") @db.ObjectId
+  name           String
+  initialBalance Float           @map("initial_balance")
+  color          String
+  type           BankAccountType
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+
+  @@map("bank_accounts")
+}
+
+model Category {
+  id     String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId String          @map("user_id") @db.ObjectId
+  name   String
+  icon   String
+  type   TransactionType
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  transactions Transaction[]
+}
+
+model Transaction {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String          @map("user_id") @db.ObjectId
+  backAccountId String          @map("bank_account_id") @db.ObjectId
+  categoryId    String?         @map("category_id") @db.ObjectId
+  name          String
+  value         Float
+  date          DateTime
+  type          TransactionType
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  bankAccount BankAccount @relation(fields: [backAccountId], references: [id], onDelete: Cascade)
+  category    Category?   @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+
+  @@map("transactions")
 }
