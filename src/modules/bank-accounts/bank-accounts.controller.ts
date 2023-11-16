@@ -13,6 +13,7 @@ import { BankAccountsService } from './services/bank-accounts.service';
 import { CreateBankAccountDto } from './dto/create-bank-account.dto';
 import { UpdateBankAccountDto } from './dto/update-bank-account.dto';
 import { ActiveUserId } from 'src/shared/decorators/ActiveUserId';
+import { ParseObjectIdPipe } from 'src/shared/pipes/ParseObjectIdPipe';
 
 @Controller('bank-accounts')
 export class BankAccountsController {
@@ -34,7 +35,7 @@ export class BankAccountsController {
   @Put(':bankAccountId')
   update(
     @ActiveUserId() userId: string,
-    @Param('bankAccountId') bankAccountId: string,
+    @Param('bankAccountId', ParseObjectIdPipe) bankAccountId: string,
     @Body() updateBankAccountDto: UpdateBankAccountDto,
   ) {
     return this.bankAccountsService.update(
@@ -48,7 +49,7 @@ export class BankAccountsController {
   @HttpCode(HttpStatus.NO_CONTENT)
   remove(
     @ActiveUserId() userId: string,
-    @Param('bankAccountId') bankAccountId: string,
+    @Param('bankAccountId', ParseObjectIdPipe) bankAccountId: string,
   ) {
     return this.bankAccountsService.remove(userId, bankAccountId);
   }
