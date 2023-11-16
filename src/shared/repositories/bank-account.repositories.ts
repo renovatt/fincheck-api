@@ -7,11 +7,13 @@ import { type Prisma } from '@prisma/client';
 export class BankAccountRepository {
   constructor(private readonly prismaService: PrismaService) { }
 
-  findMany(findManyDto: Prisma.BankAccountFindManyArgs){
+  findMany<T extends Prisma.BankAccountFindManyArgs>(
+    findManyDto: Prisma.SelectSubset<T, Prisma.BankAccountFindManyArgs>
+  ) {
     return this.prismaService.bankAccount.findMany(findManyDto)
   }
 
-  findFirst(findFirstDto: Prisma.BankAccountFindFirstArgs){
+  findFirst(findFirstDto: Prisma.BankAccountFindFirstArgs) {
     return this.prismaService.bankAccount.findFirst(findFirstDto)
   }
 
