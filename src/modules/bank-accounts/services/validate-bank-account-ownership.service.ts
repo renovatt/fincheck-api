@@ -1,5 +1,6 @@
+/* eslint-disable prettier/prettier */
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { BankAccountRepository } from 'src/shared/repositories/bank-account.repositories';
+import { BankAccountRepository } from 'src/shared/database/repositories/bank-account.repositories';
 
 @Injectable()
 export class ValidateBankAccountOwnershipSevice {
