@@ -4,6 +4,10 @@ import { IsNotEmpty, IsString, NotEquals, validateSync } from 'class-validator';
 class Env {
   @IsString()
   @IsNotEmpty()
+  PORT: string;
+
+  @IsString()
+  @IsNotEmpty()
   dbURL: string;
 
   @IsString()
@@ -15,6 +19,7 @@ class Env {
 export const env: Env = plainToInstance(Env, {
   jwtSecret: process.env.JWT_SECRET,
   dbURL: process.env.DATABASE_URL,
+  PORT: process.env.PORT,
 });
 
 const errors = validateSync(env);
