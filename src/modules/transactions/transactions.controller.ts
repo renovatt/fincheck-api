@@ -14,11 +14,11 @@ import {
 import { TransactionsService } from './services/transactions.service';
 import { CreateTransactionDto } from './dto/create-transaction.dto';
 import { UpdateTransactionDto } from './dto/update-transaction.dto';
-import { ActiveUserId } from 'src/shared/decorators/ActiveUserId';
-import { ParseObjectIdPipe } from 'src/shared/pipes/ParseObjectIdPipe';
-import { OptionalParseObjectIdPipe } from 'src/shared/pipes/OptionalParseObjectIdPipe';
+import { ActiveUserId } from '../../shared/decorators/ActiveUserId';
+import { ParseObjectIdPipe } from '../../shared/pipes/ParseObjectIdPipe';
+import { OptionalParseObjectIdPipe } from '../../shared/pipes/OptionalParseObjectIdPipe';
 import { TransactionType } from './entities/Transaction';
-import { OptionalParseEnumPipe } from 'src/shared/pipes/OptionalParseEnumPipe';
+import { OptionalParseEnumPipe } from '../../shared/pipes/OptionalParseEnumPipe';
 
 @Controller('transactions')
 export class TransactionsController {

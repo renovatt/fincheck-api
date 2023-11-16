@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { Injectable } from '@nestjs/common';
-import { env } from 'src/shared/config/env';
+import { env } from '../../shared/config/env';
 
 @Injectable()
 export class ConnectionService {
