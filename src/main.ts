@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { env } from './shared/config/env';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
@@ -9,14 +9,19 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const PORT = parseInt(env.PORT || '5000', 10);
 
+  const SWAGGER_TITLE = 'Fincheck API';
+  const SWAGGER_DESCRIPTION =
+    'Documentação Fincheck API - Desenvolvida para um sistema financeiro.';
+  const SWAGGER_PREFIX = '/docs';
+
   const config = new DocumentBuilder()
-    .setTitle('Fincheck')
-    .setDescription('Documentação da Fincheck API')
+    .setTitle(SWAGGER_TITLE)
+    .setDescription(SWAGGER_DESCRIPTION)
     .setVersion('1.0')
-    .addTag('users')
     .build();
+
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
+  SwaggerModule.setup(SWAGGER_PREFIX, app, document);
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalGuards();
@@ -25,5 +30,6 @@ async function bootstrap() {
   });
 
   await app.listen(PORT);
+  Logger.log(`🚀 Application is running on: http://localhost:${PORT}`);
 }
 bootstrap();
