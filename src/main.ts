@@ -21,7 +21,10 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup(SWAGGER_PREFIX, app, document);
+  SwaggerModule.setup(SWAGGER_PREFIX, app, document, {
+    customCssUrl: '/swagger-ui.css',
+    customJs: ['/swagger-ui-bundle.js', '/swagger-ui-standalone-preset.js'],
+  });
 
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalGuards();

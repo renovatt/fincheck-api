@@ -8,6 +8,8 @@ import { CategoriesModule } from './modules/categories/categories.module';
 import { BankAccountsModule } from './modules/bank-accounts/bank-accounts.module';
 import { TransactionsModule } from './modules/transactions/transactions.module';
 import { ConnectionModule } from './modules/connection/connection.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -18,6 +20,7 @@ import { ConnectionModule } from './modules/connection/connection.module';
     BankAccountsModule,
     TransactionsModule,
     ConnectionModule,
+    ServeStaticModule.forRoot({ rootPath: join(__dirname, '..', 'public') }),
   ],
   controllers: [],
   providers: [
